@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ip route change default via 172.17.42.254
+ip route change default via 172.17.42.254 && echo "nameserver 172.17.42.254" > /etc/resolv.conf
 
 settings_array=(
 	"Port=${PORT_7778}"
