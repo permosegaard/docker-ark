@@ -4,11 +4,7 @@ ip route change default via 172.17.42.254
 
 ulimit -n 2048
 
-if [ "$( find /server/ -type f | wc -l )" -lt "1" ]
-then
-  echo "copying seed across..."
-  time cp -Ra /seed/${CONTAINER_TYPE}/ /server/
-fi
+if [ "$( find /server/ -type f | wc -l )" -lt "1" ]; then echo "copying seed across..."; time cp -Ra /seed/${CONTAINER_TYPE}/ /server/; fi
 /root/steamcmd/steamcmd.sh +login anonymous +force_install_dir /server +app_update 376030 validate +quit
 
 settings_array=(
