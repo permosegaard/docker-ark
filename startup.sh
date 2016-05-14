@@ -7,6 +7,7 @@ ulimit -n 2048
 /root/steamcmd/steamcmd.sh +login anonymous +force_install_dir /server +app_update 376030 +quit
 
 settings_array=(
+	"SessionName=${CONTAINER_NAME}"
 	"Port=${PORT_7778}"
 	"QueryPort=${PORT_27016}"
 	"RCONEnabled=True"
