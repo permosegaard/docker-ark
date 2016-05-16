@@ -17,6 +17,7 @@ then
   cp -Rfs /seed/${CONTAINER_TYPE}/game/* /server/
   cp -Rfs /seed/${CONTAINER_TYPE}/steamcmd/* /root/steamcmd/
   cp -Rfs /seed/${CONTAINER_TYPE}/steam/* /root/Steam/
+  cp -f /seed/misc/libksm_preload.so /server/
 fi
 
 root/steamcmd/steamcmd.sh +login $STEAM_CREDENTIALS +force_install_dir /server +app_update 376030 +quit
@@ -30,4 +31,4 @@ settings_array=(
 )
 settings_string="$( printf "?%s" "${settings_array[@]}" )"
 
-ulimit -n 2048 && cd /server/ && ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?${settings_string} -server -log
+ulimit -n 2048 && cd /server/ && LD_PRELOAD=/server/libksm_preload.so ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?${settings_string} -server -log
