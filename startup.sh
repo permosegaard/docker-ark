@@ -13,7 +13,7 @@ apt-get update && apt-get install -y rsync openssh-client && echo && echo "updat
 if [ "$( find /server/ -type f | wc -l )" -lt "1" ]
 then
   echo "copying seed across... this may take some time depending on the game size"
-  rm -Rf /server/* /root/steamcmd/*
+  rm -Rf /server/* /root/Steam/* /root/steamcmd/*
   cp -Rf /seed/${CONTAINER_TYPE}/game/* /server/ # change to hard/soft links
   cp -Rf /seed/${CONTAINER_TYPE}/steamcmd/* /root/steamcmd/ # change to hard/soft links
   cp -Rf /seed/${CONTAINER_TYPE}/steam/* /root/Steam/ # change to hard/soft links
