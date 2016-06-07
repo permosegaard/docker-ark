@@ -21,7 +21,7 @@ else
   
   /root/steamcmd/steamcmd.sh +login ${STEAM_CREDENTIALS} +force_install_dir /server +app_update ${STEAM_APP_ID} +quit
   
-  if [ ! -f /overlay/.provisioned ] && [ ! -f /server/server.cfg ]
+  if [ ! -f /server/server.cfg ]
   then
     cat << EOF > /server/server.cfg
 SessionName=${CONTAINER_NAME}
