@@ -21,18 +21,18 @@ else
   
   /root/steamcmd/steamcmd.sh +login ${STEAM_CREDENTIALS} +force_install_dir /server +app_update ${STEAM_APP_ID} +quit
   
-  if [ ! -f /overlay/.provisioned ] && [ ! -f /overlay/server.cfg ]
+  if [ ! -f /overlay/.provisioned ] && [ ! -f /server/server.cfg ]
   then
-  	echo "\
-SessionName=${CONTAINER_NAME}\
-Port=${PORT_7778}\
-QueryPort=${PORT_27016}\
-RCONEnabled=True\
-RCONPort=${PORT_32330}\
-\	" > /overlay/server.cfg
+    cat << EOF > /server/server.cfg
+SessionName=${CONTAINER_NAME}
+Port=${PORT_7778}
+QueryPort=${PORT_27016}
+RCONEnabled=True
+RCONPort=${PORT_32330}
+EOF
   fi
   
-  settings_array=(); cat /overlay/server.cfg | while read line; do settings_array+=( "$line" ); done
+  settings_array=(); cat /server/server.cfg | while read line; do settings_array+=( "$line" ); done
   settings_string="$( printf "?%s" "${settings_array[@]}" )"
   
   ulimit -n 2048 && cd /server/ && ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?${settings_string} -server -log
