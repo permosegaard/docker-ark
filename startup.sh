@@ -29,11 +29,14 @@ Port=${PORT_7778}
 QueryPort=${PORT_27016}
 RCONEnabled=True
 RCONPort=${PORT_32330}
+ServerAdminPassword=
+PreventOfflinePvP=True
+PreventDiseases=True
 EOF
   fi
   
   settings_array=(); cat /server/server.cfg | while read line; do settings_array+=( "$line" ); done
   settings_string="$( printf "?%s" "${settings_array[@]}" )"
   
-  ulimit -n 2048 && cd /server/ && ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?${settings_string} -server -log
+  ulimit -n 2048 && cd /server/ && ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?${settings_string} -server -log -UseBattlEye -usecache
 fi
