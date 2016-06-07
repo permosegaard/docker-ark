@@ -20,14 +20,19 @@ else
   mkdir -p /root/Steam && mount -t aufs -o noxino -o br=/overlay/root-steam=rw:/seed/${CONTAINER_TYPE}/root-steam=ro none /root/Steam
   
   /root/steamcmd/steamcmd.sh +login ${STEAM_CREDENTIALS} +force_install_dir /server +app_update ${STEAM_APP_ID} +quit
-
-  settings_array=(
-	"SessionName=${CONTAINER_NAME}"
-	"Port=${PORT_7778}"
-	"QueryPort=${PORT_27016}"
-	"RCONEnabled=True"
-	"RCONPort=${PORT_32330}"
-  )
+  
+  if [ ! -f /overlay/.provisioned ] && [ ! -f /overlay/server.cfg ]
+  then
+  	echo "\
+SessionName=${CONTAINER_NAME}\
+Port=${PORT_7778}\
+QueryPort=${PORT_27016}\
+RCONEnabled=True\
+RCONPort=${PORT_32330}\
+\	" > /overlay/server.cfg
+  fi
+  
+  settings_array=(); cat /overlay/server.cfg | while read line; do settings_array+=( "$line" ); done
   settings_string="$( printf "?%s" "${settings_array[@]}" )"
   
   ulimit -n 2048 && cd /server/ && ShooterGame/Binaries/Linux/ShooterGameServer TheIsland?${settings_string} -server -log
