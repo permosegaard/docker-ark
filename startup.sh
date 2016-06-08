@@ -35,7 +35,5 @@ PreventDiseases=True
 EOF
   fi
   
-  settings_string="TheIsland"; while read line; do settings_string+="?${line}"; done < /server/server.cfg
-  
-  ulimit -n 2048 && cd /server/ && ShooterGame/Binaries/Linux/ShooterGameServer ${settings_string} -server -log -UseBattlEye -usecache
+  ulimit -n 2048 && cd /server/ && ShooterGame/Binaries/Linux/ShooterGameServer $( echo -n "TheIsland"; while read line; do echo -n "?${line}"; done < /server/server.cfg ) -server -log -UseBattlEye -usecache
 fi
