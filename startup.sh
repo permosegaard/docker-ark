@@ -1,13 +1,13 @@
 #!/bin/bash
 
-if [ -f /overlay/.pause ]; then read -p "pausing..."; fi
+if [ -f /.pause ]; then read -p "pausing..."; fi
 
 STEAM_APP_ID=376030
 
 ip route change default via 172.17.42.254
 if [ -z "${STEAM_USER}" ]; then STEAM_CREDENTIALS="anonymous"; else STEAM_CREDENTIALS="${STEAM_USERNAME} ${STEAM_PASSWORD}"; fi
 
-if [ -f /overlay/.seed ] || [ -f /seed/${CONTAINER_TYPE}/seed ]
+if [ -f /seed/${CONTAINER_TYPE}/seed ]
 then
   tar -cf /overlay/root.tar /root && mkdir /root/steamcmd && curl -s "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar -vzx -C "/root/steamcmd/"
   while [ "$( find /server/ -type f | wc -l )" -lt 1 ]; do /root/steamcmd/steamcmd.sh +login ${STEAM_CREDENTIALS} +force_install_dir /server +app_update ${STEAM_APP_ID} validate +quit; done
